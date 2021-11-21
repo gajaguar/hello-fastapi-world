@@ -8,6 +8,7 @@ from pydantic import BaseModel
 from fastapi import FastAPI
 from fastapi import Body
 from fastapi import Query
+from fastapi import Path
 
 app = FastAPI()
 
@@ -33,7 +34,7 @@ def show_person(
         None,
         min_length=1,
         max_length=50,
-        name='name',
+        name='Name',
         description='The name of the person. It must be between 1 and 50',
         ),
     age: int = Query(
@@ -44,3 +45,15 @@ def show_person(
         )
 ):
     return {name: age}
+
+@app.get('/person/{id}')
+def show_person_by_id(
+    id: int = Path(
+        ...,
+        ge=1,
+        le=10,
+        name='Id',
+        description='The id of the person. It must be between 1 and 10'
+        )
+):
+    return {'id': id}
