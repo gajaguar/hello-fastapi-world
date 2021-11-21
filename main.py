@@ -14,6 +14,11 @@ from fastapi import Body
 app = FastAPI()
 
 # Models
+class Location(BaseModel):
+    city: str
+    state: str
+    country: str
+
 class Person(BaseModel):
     first_name: str
     last_name: str
@@ -71,7 +76,16 @@ def update_person(
     person: Person = Body(
         ...,
         name='Person',
-        description='The person object. It must be between 1 and 10'
+        description='The person object.'
+    ),
+    location: Location = Body(
+        ...,
+        name='Location',
+        description='The location object.'
     )
 ):
-    return {'id': id, 'person': person}
+    data = {}
+    data.update(person.dict())
+    data.update(location.dict())
+
+    return {'id': id, 'data': data}
