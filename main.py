@@ -9,6 +9,7 @@ from fastapi import FastAPI
 from fastapi import Body
 from fastapi import Query
 from fastapi import Path
+from fastapi import Body
 
 app = FastAPI()
 
@@ -57,3 +58,20 @@ def show_person_by_id(
     )
 ):
     return {'id': id}
+
+@app.put('/person/{id}')
+def update_person(
+    id: int = Path(
+        ...,
+        ge=1,
+        le=10,
+        name='Id',
+        description='The id of the person. It must be between 1 and 10'
+    ),
+    person: Person = Body(
+        ...,
+        name='Person',
+        description='The person object. It must be between 1 and 10'
+    )
+):
+    return {'id': id, 'person': person}
