@@ -36,13 +36,13 @@ def show_person(
         max_length=50,
         name='Name',
         description='The name of the person. It must be between 1 and 50',
-        ),
+    ),
     age: int = Query(
         ...,
         ge=18,
         name='Age',
         description='The age of the person. Only accepts over 18 years old'
-        )
+    )
 ):
     return {name: age}
 
@@ -54,6 +54,6 @@ def show_person_by_id(
         le=10,
         name='Id',
         description='The id of the person. It must be between 1 and 10'
-        )
+    )
 ):
     return {'id': id}
